@@ -264,20 +264,13 @@ const ProductCardView = ({ searchParams }: { searchParams: any }) => {
                 </h2>
                 <div className="flex flex-wrap justify-center items-center gap-x-2 mt-2 md:mt-4">
                   <span className="text-base md:text-xl font-bold text-dark dark:text-darkmode-dark">
-                    {currencySymbol}{" "}
-                    {product?.priceRange?.minVariantPrice?.amount}{" "}
-                    {product?.priceRange?.minVariantPrice?.currencyCode}
+                    Ksh. {product?.priceRange?.minVariantPrice?.amount}
                   </span>
                   {parseFloat(
                     product?.compareAtPriceRange?.maxVariantPrice?.amount,
                   ) > 0 ? (
                     <s className="text-light dark:text-darkmode-light text-xs md:text-base font-medium">
-                      {currencySymbol}{" "}
-                      {product?.compareAtPriceRange?.maxVariantPrice?.amount}{" "}
-                      {
-                        product?.compareAtPriceRange?.maxVariantPrice
-                          ?.currencyCode
-                      }
+                      Ksh. {product?.compareAtPriceRange?.maxVariantPrice?.amount}
                     </s>
                   ) : (
                     ""

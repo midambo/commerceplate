@@ -261,16 +261,13 @@ const ProductListView = ({ searchParams }: { searchParams: any }) => {
 
                     <div className="flex items-center gap-x-2 mt-2">
                       <span className="text-light dark:text-darkmode-light text-xs md:text-lg font-bold">
-                        ৳ {priceRange?.minVariantPrice?.amount}{" "}
-                        {priceRange?.minVariantPrice?.currencyCode}
+                        Ksh. {priceRange?.minVariantPrice?.amount}
                       </span>
                       {parseFloat(
                         compareAtPriceRange?.maxVariantPrice?.amount,
                       ) > 0 ? (
                         <s className="text-light dark:text-darkmode-light text-xs md:text-base font-medium">
-                          {currencySymbol}{" "}
-                          {compareAtPriceRange?.maxVariantPrice?.amount}{" "}
-                          {compareAtPriceRange?.maxVariantPrice?.currencyCode}
+                          Ksh. {compareAtPriceRange?.maxVariantPrice?.amount}
                         </s>
                       ) : (
                         ""

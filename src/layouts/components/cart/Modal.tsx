@@ -147,9 +147,11 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
                               <Price
                                 className="flex justify-end space-y-2 text-right text-sm"
                                 amount={item.cost.totalAmount.amount}
-                                currencyCode={
-                                  item.cost.totalAmount.currencyCode
-                                }
+                                currencyCode={item.cost.totalAmount.currencyCode}
+                                formatOptions={{
+                                  style: 'currency',
+                                  currency: item.cost.totalAmount.currencyCode,
+                                }}
                               />
                               <div className="ml-auto flex h-9 flex-row items-center rounded-md border border-neutral-200 dark:border-neutral-700">
                                 <EditItemQuantityButton
@@ -179,6 +181,10 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
                         className="text-right text-base text-black dark:text-white"
                         amount={cart.cost.totalTaxAmount.amount}
                         currencyCode={cart.cost.totalTaxAmount.currencyCode}
+                        formatOptions={{
+                          style: 'currency',
+                          currency: cart.cost.totalTaxAmount.currencyCode,
+                        }}
                       />
                     </div>
                     <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 pt-1 dark:border-neutral-700">
@@ -191,6 +197,10 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
                         className="text-right text-base text-black dark:text-white"
                         amount={cart.cost.totalAmount.amount}
                         currencyCode={cart.cost.totalAmount.currencyCode}
+                        formatOptions={{
+                          style: 'currency',
+                          currency: cart.cost.totalAmount.currencyCode,
+                        }}
                       />
                     </div>
                   </div>

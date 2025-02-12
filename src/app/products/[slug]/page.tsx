@@ -4,6 +4,7 @@ import ProductGallery from "@/components/product/ProductGallery";
 import ShowTags from "@/components/product/ShowTags";
 import Tabs from "@/components/product/Tabs";
 import { VariantSelector } from "@/components/product/VariantSelector";
+import Price from "@/components/Price"; // Add this line
 import LoadingProductGallery from "@/components/skeleton/SkeletonProductGallery";
 import config from "@/config/config.json";
 import { getListPage } from "@/lib/contentParser";
@@ -69,18 +70,21 @@ const ShowProductSingle = async ({ params }: { params: { slug: string } }) => {
 
               <div className="flex gap-2 items-center">
                 <h4 className="text-light dark:text-darkmode-light max-md:h2">
-                  {currencySymbol} {priceRange?.minVariantPrice.amount}{" "}
-                  {priceRange?.minVariantPrice?.currencyCode}
+                  <Price
+                    amount={priceRange?.minVariantPrice.amount}
+                    currencyCode={priceRange?.minVariantPrice?.currencyCode}
+                    className="text-2xl font-bold"
+                  />
                 </h4>
                 {parseFloat(compareAtPriceRange?.maxVariantPrice.amount) > 0 ? (
                   <s className="text-light max-md:h3 dark:text-darkmode-light">
-                    {currencySymbol}{" "}
-                    {compareAtPriceRange?.maxVariantPrice?.amount}{" "}
-                    {compareAtPriceRange?.maxVariantPrice?.currencyCode}
+                    <Price
+                      amount={compareAtPriceRange?.maxVariantPrice?.amount}
+                      currencyCode={compareAtPriceRange?.maxVariantPrice?.currencyCode}
+                      className="text-xl"
+                    />
                   </s>
-                ) : (
-                  ""
-                )}
+                ) : null}
               </div>
 
               <div className="my-10 md:my-10 space-y-6 md:space-y-10">
@@ -95,14 +99,20 @@ const ShowProductSingle = async ({ params }: { params: { slug: string } }) => {
                 </div>
               </div>
 
-              <div className="flex gap-4 mt-8 md:mt-10 mb-6">
+              <div className="flex flex-col gap-4 mt-8 md:mt-10 mb-6">
                 <AddToCart
                   variants={product?.variants}
                   availableForSale={product?.availableForSale}
-                  stylesClass={"btn max-md:btn-sm btn-primary"}
-                  handle={null}
+                  handle={params.slug}
                   defaultVariantId={defaultVariantId}
+                  stylesClass="btn btn-primary w-full"
                 />
+                <a
+                  href={`/cart?checkout=true&product=${params.slug}`}
+                  className="btn btn-outline-primary w-full text-center"
+                >
+                  Place Order Now
+                </a>
               </div>
 
               <div className="mb-8 md:mb-10">

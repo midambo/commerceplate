@@ -1,7 +1,7 @@
 {
   "site": {
-    "title": "Commerceplate",
-    "base_url": "https://tf-commerceplate.netlify.app/",
+    "title": "Toto Toys & Games",
+    "base_url": "toto.co.ke",
     "base_path": "/",
     "trailing_slash": false,
     "favicon": "/images/favicon.png",
@@ -9,7 +9,7 @@
     "logo_darkmode": "/images/logo-darkmode.png",
     "logo_width": "150",
     "logo_height": "27",
-    "logo_text": "Commerceplate"
+    "logo_text": "Toto Toys & Games"
   },
 
   "settings": {
@@ -42,8 +42,8 @@
   },
 
   "shopify": {
-    "currencySymbol": "৳",
-    "currencyCode": "BDT",
+    "currencySymbol": "Ksh.",
+    "currencyCode": "KES",
     "collections": {
       "hero_slider": "hidden-homepage-carousel",
       "featured_products": "featured-products"
