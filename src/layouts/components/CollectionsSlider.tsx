@@ -40,7 +40,6 @@ const CollectionsSlider = ({ collections }: { collections: any }) => {
     >
       <Swiper
         modules={[Pagination, Navigation]}
-        // navigation={true}
         slidesPerView={2}
         spaceBetween={10}
         breakpoints={{
@@ -50,71 +49,52 @@ const CollectionsSlider = ({ collections }: { collections: any }) => {
           },
           768: {
             slidesPerView: 3,
-            spaceBetween: 24,
-          },
-          1024: {
-            slidesPerView: 3,
-            spaceBetween: 24,
+            spaceBetween: 30,
           },
         }}
+        onInit={() => setInit(true)}
         navigation={{
           prevEl: prevRef.current,
           nextEl: nextRef.current,
         }}
-        //trigger a re-render by updating the state on swiper initialization
-        onInit={() => setInit(true)}
+        className="relative flex items-center"
       >
-        {collectionsData?.map((item: any) => {
-          const { title, handle, image, path, products } = item;
-          return (
-            <SwiperSlide key={handle}>
-              <div className="text-center relative">
+        {collectionsData?.map((collection: any, index: number) => (
+          <SwiperSlide key={index}>
+            <Link href={`/collections/${collection.handle}`}>
+              <div className="relative">
                 <ImageFallback
-                  src={image?.url}
+                  src={collection.image?.src || '/images/placeholder.jpg'}
+                  alt={collection.title || 'Collection Image'}
                   width={424}
                   height={306}
-                  alt={title}
                   className="h-[150px] md:h-[250px] lg:h-[306px] object-cover rounded-md"
                 />
-                <div className="py-6">
-                  <h3 className="mb-2 font-medium h4">
-                    <Link
-                      className="after:absolute after:inset-0"
-                      href={`/products?c=${handle}`}
-                    >
-                      {title}
-                    </Link>
-                  </h3>
-                  <p className="text-light dark:text-darkmode-light text-xs md:text-xl">
-                    {item.products?.edges.length} items
-                  </p>
-                </div>
               </div>
-            </SwiperSlide>
-          );
-        })}
-
-        <div
-          className={`hidden md:block w-full absolute top-[33%] z-10 px-4 text-dark ${
-            isHovered
-              ? "opacity-100 transition-opacity duration-300 ease-in-out"
-              : "opacity-0 transition-opacity duration-300 ease-in-out"
-          }`}
-        >
-          <div
-            ref={prevRef}
-            className="p-2 lg:p-3 rounded-md bg-body cursor-pointer shadow-sm absolute left-4"
-          >
-            <HiOutlineArrowNarrowLeft size={24} />
-          </div>
-          <div
-            ref={nextRef}
-            className="p-2 lg:p-3 rounded-md bg-body cursor-pointer shadow-sm absolute right-4"
-          >
-            <HiOutlineArrowNarrowRight size={24} />
-          </div>
-        </div>
+            </Link>
+          </SwiperSlide>
+        ))}
       </Swiper>
+      <div
+        className={`hidden md:block w-full absolute top-[33%] z-10 px-4 text-dark ${
+          isHovered
+            ? "opacity-100 transition-opacity duration-300 ease-in-out"
+            : "opacity-0 transition-opacity duration-300 ease-in-out"
+        }`}
+      >
+        <div
+          ref={prevRef}
+          className="p-2 lg:p-3 rounded-md bg-body cursor-pointer shadow-sm absolute left-4"
+        >
+          <HiOutlineArrowNarrowLeft size={24} />
+        </div>
+        <div
+          ref={nextRef}
+          className="p-2 lg:p-3 rounded-md bg-body cursor-pointer shadow-sm absolute right-4"
+        >
+          <HiOutlineArrowNarrowRight size={24} />
+        </div>
+      </div>
     </div>
   );
 };

@@ -29,7 +29,15 @@ module.exports = {
     "./src/content/**/*.{md,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx}",
   ],
-  safelist: [{ pattern: /^swiper-/ }],
+  safelist: [
+    "swiper-wrapper",
+    "swiper-slide",
+    "swiper-button-prev",
+    "swiper-button-next",
+    "swiper-pagination",
+    "swiper-pagination-bullet",
+    "swiper-pagination-bullet-active"
+  ],
   darkMode: "class",
   theme: {
     screens: {

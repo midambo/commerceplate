@@ -41,10 +41,11 @@ export const sorting: SortFilterItem[] = [
 ];
 
 export const TAGS = {
-  collections: "collections",
-  products: "products",
-  cart: "cart",
-};
+  collections: 'collections',
+  products: 'products',
+  cart: 'cart',
+  cacheRevalidation: 'cache-revalidation'
+} as const;
 
 export const HIDDEN_PRODUCT_TAG = "nextjs-frontend-hidden";
 export const DEFAULT_OPTION = "Default Title";

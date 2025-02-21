@@ -12,6 +12,8 @@ const Providers = ({ children }: { children: ReactNode }) => {
       attribute="class"
       defaultTheme={default_theme}
       enableColorScheme={false}
+      enableSystem={true}
+      disableTransitionOnChange
     >
       {children}
     </ThemeProvider>

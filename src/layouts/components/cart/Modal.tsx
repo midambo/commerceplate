@@ -6,6 +6,7 @@ import { createUrl } from "@/lib/utils";
 import { Dialog, Transition } from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import Price from "../Price";
@@ -23,6 +24,7 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
   const quantityRef = useRef(cart?.totalQuantity);
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
+  const router = useRouter();
 
   useEffect(() => {
     // Open cart modal when quantity changes.
@@ -203,13 +205,18 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
                         }}
                       />
                     </div>
+                    <div className="flex flex-col gap-2">
+                      <button
+                        onClick={() => {
+                          closeCart();
+                          router.push('/checkout');
+                        }}
+                        className="btn btn-primary w-full"
+                      >
+                        Place Order Now
+                      </button>
+                    </div>
                   </div>
-                  <a
-                    href={cart.checkoutUrl}
-                    className="block w-full rounded-md bg-dark dark:bg-darkmode-dark p-3 text-center text-sm font-medium text-darkmode-light dark:text-dark opacity-90 hover:opacity-100"
-                  >
-                    Proceed to Checkout
-                  </a>
                 </div>
               )}
             </Dialog.Panel>
