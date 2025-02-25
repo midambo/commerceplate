@@ -58,14 +58,14 @@ const FeaturedProducts = ({ products }: { products: Product[] }) => {
                   </Link>
                 </h2>
                 <div className="flex flex-wrap justify-center items-center gap-x-2 mt-2 md:mt-4">
-                  <span className="text-base md:text-xl font-bold text-dark dark:text-darkmode-dark">
+                  <span className="text-base md:text-xl font-bold text-dark">
                     {currencySymbol}
                     {priceRange.minVariantPrice.amount} USD
                   </span>
 
                   {parseFloat(compareAtPriceRange?.maxVariantPrice.amount) >
                   0 ? (
-                    <s className="text-light dark:text-darkmode-light text-xs md:text-base font-medium">
+                    <s className="text-light text-xs md:text-base font-medium">
                       {currencySymbol}{" "}
                       {compareAtPriceRange?.maxVariantPrice.amount}{" "}
                       {compareAtPriceRange?.maxVariantPrice?.currencyCode}

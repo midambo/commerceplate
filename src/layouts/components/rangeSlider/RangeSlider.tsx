@@ -2,6 +2,7 @@
 
 import { createUrl } from "@/lib/utils";
 import MultiRangeSlider from "multi-range-slider-react";
+import "multi-range-slider-react/lib/multirangeslider.css";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import "./rangeSlider.css";
@@ -37,24 +38,65 @@ const RangeSlider = ({
         </p>
       </div>
 
-      <MultiRangeSlider
-        style={{ border: "none", boxShadow: "none" }}
-        min={0}
-        max={`${maxPriceData?.amount}`}
-        minValue={getMinPrice! || 0}
-        maxValue={getMaxPrice! || parseInt(maxPriceData?.amount)}
-        onInput={(e: any) => {
-          setMinValue2(e.minValue);
-          setMaxValue2(e.maxValue);
-        }}
-        onChange={(e: any) => {
-          minValue2 === 0 && maxValue2 === parseInt(maxPriceData?.amount) ||
-            priceChange(e.minValue, e.maxValue);
-        }}
-        label={false}
-        ruler={false}
-        className="py-4"
-      />
+      <div className="multi-range-slider-container">
+        <MultiRangeSlider
+          min={0}
+          max={parseInt(maxPriceData?.amount)}
+          step={5}
+          minValue={getMinPrice! || 0}
+          maxValue={getMaxPrice! || parseInt(maxPriceData?.amount)}
+          ruler={false}
+          label={true}
+          preventWheel={false}
+          baseClassName="multi-range-slider"
+          style={{
+            border: "none",
+            boxShadow: "none",
+            padding: "15px 10px",
+          }}
+          onInput={(e: any) => {
+            setMinValue2(e.minValue);
+            setMaxValue2(e.maxValue);
+          }}
+          onChange={(e: any) => {
+            minValue2 === 0 && maxValue2 === parseInt(maxPriceData?.amount) ||
+              priceChange(e.minValue, e.maxValue);
+          }}
+        />
+        <style jsx>{`
+          .multi-range-slider-container :global(.multi-range-slider) {
+            border: none;
+            box-shadow: none;
+            padding: 15px 10px;
+          }
+          .multi-range-slider-container :global(.multi-range-slider .bar-inner) {
+            background-color: #00B4B4;
+            border: none;
+            box-shadow: none;
+          }
+          .multi-range-slider-container :global(.multi-range-slider .thumb::before) {
+            border: 2px solid #00B4B4;
+            box-shadow: none;
+          }
+          .multi-range-slider-container :global(.multi-range-slider .thumb .caption) {
+            background-color: #00B4B4;
+            color: white;
+            font-size: 0.75rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+          }
+          .multi-range-slider-container :global(.multi-range-slider .thumb .caption *) {
+            background-color: #00B4B4;
+            color: white;
+          }
+          .multi-range-slider-container :global(.multi-range-slider .bar-left),
+          .multi-range-slider-container :global(.multi-range-slider .bar-right) {
+            background-color: #E8E8E8;
+            box-shadow: none;
+            padding: 1px 0;
+          }
+        `}</style>
+      </div>
 
       {(minValue2 === parseInt(getMinPrice!) &&
         maxValue2 === parseInt(getMaxPrice!)) ||

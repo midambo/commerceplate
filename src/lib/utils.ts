@@ -15,33 +15,47 @@ export const ensureStartsWith = (stringToCheck: string, startsWith: string) =>
     ? stringToCheck
     : `${startsWith}${stringToCheck}`;
 
+export const formatPrice = (amount: number) => {
+  return new Intl.NumberFormat('en-KE', {
+    style: 'currency',
+    currency: 'KES',
+    minimumFractionDigits: 2,
+  }).format(amount);
+};
+
+export const toTitleCase = (str: string) => {
+  return str.toLowerCase().split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
+
+export function formatPhoneNumber(phone: string): string {
+  // Remove any non-digit characters
+  let cleaned = phone.replace(/\D/g, '');
+  
+  // Remove leading zero if present
+  if (cleaned.startsWith('0')) {
+    cleaned = cleaned.substring(1);
+  }
+  
+  // If number doesn't start with country code, add it
+  if (!cleaned.startsWith('254')) {
+    cleaned = '254' + cleaned;
+  }
+  
+  // Add the plus sign
+  return '+' + cleaned;
+}
+
 export const validateEnvironmentVariables = () => {
   const requiredEnvironmentVariables = [
     "SHOPIFY_STORE_DOMAIN",
     "SHOPIFY_STOREFRONT_ACCESS_TOKEN",
   ];
-  const missingEnvironmentVariables = [] as string[];
 
   requiredEnvironmentVariables.forEach((envVar) => {
     if (!process.env[envVar]) {
-      missingEnvironmentVariables.push(envVar);
+      throw new Error(`Environment variable ${envVar} is not defined`);
     }
   });
-
-  if (missingEnvironmentVariables.length) {
-    throw new Error(
-      `The following environment variables are missing. Your site will not work without them. Read more: https://vercel.com/docs/integrations/shopify#configure-environment-variables\n\n${missingEnvironmentVariables.join(
-        "\n",
-      )}\n`,
-    );
-  }
-
-  if (
-    process.env.SHOPIFY_STORE_DOMAIN?.includes("[") ||
-    process.env.SHOPIFY_STORE_DOMAIN?.includes("]")
-  ) {
-    throw new Error(
-      "Your `SHOPIFY_STORE_DOMAIN` environment variable includes brackets (ie. `[` and / or `]`). Your site will not work with them there. Please remove them.",
-    );
-  }
 };

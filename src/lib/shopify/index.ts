@@ -89,8 +89,17 @@ export async function shopifyFetch<T>({
   query: string;
   tags?: string[];
   variables?: ExtractVariables<T>;
-}): Promise<{ status: number; body: T } | never> {
+}): Promise<{ status: number; body: T }> {
   try {
+    const endpoint = SHOPIFY_GRAPHQL_API_ENDPOINT;
+    const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
+
+    if (!endpoint || !key) {
+      throw new Error(
+        `Missing Shopify API configuration. Please check your environment variables.`
+      );
+    }
+
     const result = await fetch(endpoint, {
       method: "POST",
       headers: {
@@ -109,7 +118,9 @@ export async function shopifyFetch<T>({
     const body = await result.json();
 
     if (body.errors) {
-      throw body.errors[0];
+      throw new Error(
+        `Shopify API error: ${body.errors.map((e: any) => e.message).join(", ")}`
+      );
     }
 
     return {
@@ -117,19 +128,13 @@ export async function shopifyFetch<T>({
       body,
     };
   } catch (e) {
+    console.error("Shopify API error:", e);
+    
     if (isShopifyError(e)) {
-      throw {
-        cause: e.cause?.toString() || "unknown",
-        status: e.status || 500,
-        message: e.message,
-        query,
-      };
+      throw new Error(`Shopify API error: ${e.message}`);
     }
 
-    throw {
-      error: e,
-      query,
-    };
+    throw new Error(e instanceof Error ? e.message : "An unknown error occurred");
   }
 }
 
@@ -231,10 +236,26 @@ const reshapeProducts = (products: ShopifyProduct[]) => {
 export async function createCart(): Promise<Cart> {
   const res = await shopifyFetch<ShopifyCreateCartOperation>({
     query: createCartMutation,
-    cache: "no-store",
+    cache: 'no-store',
   });
 
-  return reshapeCart(res.body.data.cartCreate.cart);
+  const cart = res.body.data.cartCreate.cart;
+  if (!cart) {
+    throw new Error('No cart created');
+  }
+
+  const checkoutUrl = cart.checkoutUrl;
+  if (!checkoutUrl) {
+    throw new Error('No checkout URL returned');
+  }
+
+  // Add cash on delivery parameter to checkout URL
+  const checkoutUrlWithCOD = `${checkoutUrl}?payment=cash_on_delivery`;
+
+  return {
+    ...reshapeCart(cart),
+    checkoutUrl: checkoutUrlWithCOD
+  };
 }
 
 export async function addToCart(

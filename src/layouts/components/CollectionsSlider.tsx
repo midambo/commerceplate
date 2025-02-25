@@ -64,7 +64,7 @@ const CollectionsSlider = ({ collections }: { collections: any }) => {
             <Link href={`/collections/${collection.handle}`}>
               <div className="relative">
                 <ImageFallback
-                  src={collection.image?.src || '/images/placeholder.jpg'}
+                  src={collection.image?.src || collection.image?.url || `https://via.placeholder.com/424x306?text=${encodeURIComponent(collection.title || 'Collection')}`}
                   alt={collection.title || 'Collection Image'}
                   width={424}
                   height={306}

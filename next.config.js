@@ -7,7 +7,7 @@ const nextConfig = {
   trailingSlash: config.site.trailing_slash,
   output: "standalone",
   images: {
-    domains: ['cdn.shopify.com', 'localhost'],
+    domains: ['cdn.shopify.com', 'localhost', 'via.placeholder.com'],
   },
   swcMinify: true,
   compiler: {

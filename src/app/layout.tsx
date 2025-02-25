@@ -8,6 +8,7 @@ import Footer from "@/layouts/partials/Footer";
 import Header from "@/layouts/partials/Header";
 import Providers from "@/layouts/partials/Providers";
 import "@/styles/main.scss";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   metadataBase: new URL(config.site.base_url.startsWith('http') ? config.site.base_url : `https://${config.site.base_url}`),
@@ -77,16 +78,7 @@ export default function RootLayout({
         {/* theme meta */}
         <meta name="theme-name" content="commerceplate" />
         <meta name="msapplication-TileColor" content="#000000" />
-        <meta
-          name="theme-color"
-          media="(prefers-color-scheme: light)"
-          content="#fff"
-        />
-        <meta
-          name="theme-color"
-          media="(prefers-color-scheme: dark)"
-          content="#000"
-        />
+        <meta name="theme-color" content="#fff" />
 
         {/* google font css */}
         <link
@@ -99,21 +91,6 @@ export default function RootLayout({
             sf ? "&family=" + sf : ""
           }&display=swap`}
           rel="stylesheet"
-        />
-
-        {/* Theme switcher */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              try {
-                if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                  document.documentElement.classList.add('dark')
-                } else {
-                  document.documentElement.classList.remove('dark')
-                }
-              } catch (_) {}
-            `,
-          }}
         />
       </head>
 

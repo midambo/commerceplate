@@ -4,7 +4,8 @@ import ProductGallery from "@/components/product/ProductGallery";
 import ShowTags from "@/components/product/ShowTags";
 import Tabs from "@/components/product/Tabs";
 import { VariantSelector } from "@/components/product/VariantSelector";
-import Price from "@/components/Price"; // Add this line
+import { PlaceOrderButton } from "@/layouts/components/cart/PlaceOrderButton";
+import Price from "@/components/Price"; 
 import LoadingProductGallery from "@/components/skeleton/SkeletonProductGallery";
 import config from "@/config/config.json";
 import { getListPage } from "@/lib/contentParser";
@@ -107,12 +108,12 @@ const ShowProductSingle = async ({ params }: { params: { slug: string } }) => {
                   defaultVariantId={defaultVariantId}
                   stylesClass="btn btn-primary w-full"
                 />
-                <a
-                  href={`/cart?checkout=true&product=${params.slug}`}
-                  className="btn btn-outline-primary w-full text-center"
-                >
-                  Place Order Now
-                </a>
+                <PlaceOrderButton
+                  variants={product?.variants}
+                  availableForSale={product?.availableForSale}
+                  handle={params.slug}
+                  defaultVariantId={defaultVariantId}
+                />
               </div>
 
               <div className="mb-8 md:mb-10">

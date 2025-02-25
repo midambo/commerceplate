@@ -21,7 +21,10 @@
   "dependencies": {
     "@headlessui/react": "^2.1.8",
     "@next/swc-win32-x64-msvc": "^15.1.7",
+    "@supabase/auth-helpers-nextjs": "^0.10.0",
+    "@supabase/supabase-js": "^2.49.1",
     "clsx": "^2.1.1",
+    "critters": "^0.0.23",
     "date-fns": "^4.1.0",
     "framer-motion": "^12.4.7",
     "github-slugger": "^2.0.0",

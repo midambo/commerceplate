@@ -1,3 +1,12 @@
+import { Cart } from ".";
+
+export interface LineItem {
+  quantity: number;
+  variantId: string;
+  title: string;
+  price: string;
+}
+
 export interface OrderInput {
   deliveryArea: "nairobi" | "outside";
   location: string;
@@ -6,6 +15,7 @@ export interface OrderInput {
   cartId: string;
   email?: string;
   notes?: string;
+  cart?: Cart;
 }
 
 export interface Order {

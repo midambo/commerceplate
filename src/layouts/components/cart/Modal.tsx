@@ -69,18 +69,18 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
 
               <div className="w-full h-px absolute bg-dark dark:bg-darkmode-dark left-0 top-16" />
 
-              {!cart || cart.lines.length === 0 ? (
-                <div className="flex flex-col justify-center items-center space-y-6 my-auto">
-                  <div className="md:mt-16">
-                    <FaShoppingCart size={76} />
-                  </div>
-                  <p>Oops. Your Bag Is Empty.</p>
+              {!cart?.lines || cart.lines.length === 0 ? (
+                <div className="flex h-full flex-col items-center justify-center overflow-hidden p-1">
+                  <p className="my-6 text-center text-2xl font-bold">
+                    {/* Don't show empty cart message if we just placed an order */}
+                    {window.location.pathname === '/checkout' ? '' : 'Your cart is empty'}
+                  </p>
                   <Link
-                    onClick={closeCart}
-                    href={"/products"}
+                    href="/products"
                     className="btn btn-primary w-full"
+                    onClick={closeCart}
                   >
-                    Don&apos;t Miss Out: Add Product
+                    Continue shopping
                   </Link>
                 </div>
               ) : (
@@ -207,7 +207,7 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
                     </div>
                     <div className="flex flex-col gap-2">
                       <button
-                        onClick={() => {
+                        onClick={async () => {
                           closeCart();
                           router.push('/checkout');
                         }}
