@@ -8,6 +8,9 @@ const nextConfig = {
   output: "standalone",
   images: {
     domains: ['cdn.shopify.com', 'localhost', 'via.placeholder.com'],
+    unoptimized: false,
+    deviceSizes: [640, 750, 828, 1080, 1200],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256],
   },
   swcMinify: true,
   compiler: {
@@ -17,6 +20,14 @@ const nextConfig = {
     optimizeCss: true,
     scrollRestoration: true,
     missingSuspenseWithCSRBailout: false,
+    workerThreads: true,
+    optimizePackageImports: [
+      '@headlessui/react',
+      'date-fns',
+      'framer-motion',
+      'react-icons',
+      'swiper',
+    ],
   },
   eslint: {
     ignoreDuringBuilds: true,
@@ -49,6 +60,13 @@ const nextConfig = {
             test: /[\\/]node_modules[\\/]/,
             priority: -10,
             reuseExistingChunk: true,
+            name: 'vendors',
+          },
+          commons: {
+            test: /[\\/]node_modules[\\/](@headlessui|date-fns|framer-motion|react-icons|swiper)[\\/]/,
+            name: 'commons',
+            chunks: 'all',
+            priority: 20,
           },
           default: {
             minChunks: 2,

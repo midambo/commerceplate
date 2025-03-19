@@ -2,7 +2,7 @@
 
 import ImageFallback from "@/helpers/ImageFallback";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import {
   HiOutlineArrowNarrowLeft,
   HiOutlineArrowNarrowRight,
@@ -13,6 +13,26 @@ import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import LoadingCategory from "./skeleton/SkeletonCategory";
+
+// Memoize the slide content to prevent unnecessary re-renders
+const CollectionSlide = memo(({ collection, handle }: { collection: any; handle: string }) => (
+  <Link href={`/collections/${handle}`}>
+    <div className="relative">
+      <ImageFallback
+        src={collection.image?.src || collection.image?.url || "/images/image-placeholder.png"}
+        alt={collection.title || 'Collection Image'}
+        width={424}
+        height={306}
+        className="h-[150px] md:h-[250px] lg:h-[306px] object-cover rounded-md"
+        fallback="/images/image-placeholder.png"
+        priority={true}
+        loading="eager"
+      />
+    </div>
+  </Link>
+));
+
+CollectionSlide.displayName = 'CollectionSlide';
 
 const CollectionsSlider = ({ collections }: { collections: any }) => {
   const [_, setInit] = useState(false);
@@ -28,6 +48,9 @@ const CollectionsSlider = ({ collections }: { collections: any }) => {
     setLoadingCollectionsData(false);
   }, [collections]);
 
+  const handleMouseEnter = useCallback(() => setIsHovered(true), []);
+  const handleMouseLeave = useCallback(() => setIsHovered(false), []);
+
   if (loadingCollectionsData) {
     return <LoadingCategory />;
   }
@@ -35,8 +58,8 @@ const CollectionsSlider = ({ collections }: { collections: any }) => {
   return (
     <div
       className="relative"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <Swiper
         modules={[Pagination, Navigation]}
@@ -58,20 +81,13 @@ const CollectionsSlider = ({ collections }: { collections: any }) => {
           nextEl: nextRef.current,
         }}
         className="relative flex items-center"
+        updateOnWindowResize
+        observer
+        observeParents
       >
         {collectionsData?.map((collection: any, index: number) => (
-          <SwiperSlide key={index}>
-            <Link href={`/collections/${collection.handle}`}>
-              <div className="relative">
-                <ImageFallback
-                  src={collection.image?.src || collection.image?.url || `https://via.placeholder.com/424x306?text=${encodeURIComponent(collection.title || 'Collection')}`}
-                  alt={collection.title || 'Collection Image'}
-                  width={424}
-                  height={306}
-                  className="h-[150px] md:h-[250px] lg:h-[306px] object-cover rounded-md"
-                />
-              </div>
-            </Link>
+          <SwiperSlide key={collection.id || index}>
+            <CollectionSlide collection={collection} handle={collection.handle} />
           </SwiperSlide>
         ))}
       </Swiper>
@@ -99,4 +115,4 @@ const CollectionsSlider = ({ collections }: { collections: any }) => {
   );
 };
 
-export default CollectionsSlider;
+export default memo(CollectionsSlider);
