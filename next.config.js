@@ -6,11 +6,16 @@ const nextConfig = {
   basePath: config.base_path !== "/" ? config.base_path : "",
   trailingSlash: config.site.trailing_slash,
   output: "standalone",
+  
   images: {
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'cdn.shopify.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'totokenya.myshopify.com'
       },
       {
         protocol: 'http',
@@ -25,10 +30,13 @@ const nextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200],
     imageSizes: [16, 32, 48, 64, 96, 128, 256],
   },
+  
   swcMinify: true,
+  
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
+  
   experimental: {
     optimizeCss: true,
     scrollRestoration: true,
@@ -42,20 +50,46 @@ const nextConfig = {
       'swiper',
     ],
   },
+  
   eslint: {
     ignoreDuringBuilds: true,
   },
+  
   typescript: {
     ignoreBuildErrors: true,
   },
+  
   poweredByHeader: false,
   compress: true,
   generateEtags: true,
+  
   httpAgentOptions: {
     keepAlive: true,
   },
+  
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        destination: '/:path*',
+        permanent: true
+      }
+    ];
+  },
+  
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          { key: 'X-Robots-Tag', value: 'index, follow' },
+          { key: 'Cache-Control', value: 'public, max-age=0, must-revalidate' }
+        ]
+      }
+    ];
+  },
+  
   webpack: (config, { dev, isServer }) => {
-    // Existing webpack configuration remains the same
     return config;
   },
 };
