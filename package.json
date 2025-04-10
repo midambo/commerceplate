@@ -19,11 +19,8 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "overrides": {
-    "@next/swc-win32-x64-msvc": "npm:@next/swc-linux-x64-gnu@14.1.0"
-  },
+
   "dependencies": {
-    "@next/swc-linux-x64-gnu": "^14.1.0",
     "@headlessui/react": "^2.1.8",
     "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/supabase-js": "^2.49.1",
