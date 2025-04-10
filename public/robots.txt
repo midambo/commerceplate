@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://toto.co.ke
+Host: https://example.com
 
 # Sitemaps
-Sitemap: https://toto.co.ke/sitemap.xml
+Sitemap: https://example.com/sitemap.xml
