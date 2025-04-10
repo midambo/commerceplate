@@ -17,3 +17,4 @@
   from = "/*"
   to = "/.netlify/functions/next"
   status = 200
+  force = true
