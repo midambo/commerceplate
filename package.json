@@ -13,10 +13,14 @@
     "lint": "next lint",
     "format": "prettier -w ./src",
     "generate-json": "node scripts/jsonGenerator.js",
-    "remove-darkmode": "node scripts/removeDarkmode.js && yarn format"
+    "remove-darkmode": "node scripts/removeDarkmode.js && yarn format",
+    "netlify:build": "next build"
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "overrides": {
+    "@next/swc-win32-x64-msvc": "npm:@next/swc-linux-x64-gnu@14.1.0"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.8",
