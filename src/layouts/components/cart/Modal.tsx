@@ -21,6 +21,7 @@ type MerchandiseSearchParams = {
 
 export default function CartModal({ cart }: { cart: Cart | undefined }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [pathname, setPathname] = useState('');
   const quantityRef = useRef(cart?.totalQuantity);
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
@@ -36,6 +37,11 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
 
       // Always update the quantity reference
       quantityRef.current = cart?.totalQuantity;
+    }
+
+    // Set pathname safely
+    if (typeof window !== 'undefined') {
+      setPathname(window.location.pathname);
     }
   }, [isOpen, cart?.totalQuantity, quantityRef]);
 
@@ -73,7 +79,7 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
                 <div className="flex h-full flex-col items-center justify-center overflow-hidden p-1">
                   <p className="my-6 text-center text-2xl font-bold">
                     {/* Don't show empty cart message if we just placed an order */}
-                    {window.location.pathname === '/checkout' ? '' : 'Your cart is empty'}
+                    {pathname === '/checkout' ? '' : 'Your cart is empty'}
                   </p>
                   <Link
                     href="/products"
