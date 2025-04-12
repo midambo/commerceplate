@@ -7,7 +7,7 @@
   "packageManager": "yarn@1.22.19",
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next-sitemap && echo '=== Build Output Structure ===' && ls -la .next && echo '=== Standalone Directory Structure ===' && ls -la .next/standalone",
+    "build": "next build && next-sitemap && ls -la .next/standalone",
     "start": "next start",
     "lint": "next lint",
     "format": "prettier -w ./src",
