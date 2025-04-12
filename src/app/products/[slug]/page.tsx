@@ -16,29 +16,18 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 60; // Revalidate every 60 seconds
-
-export async function generateMetadata({
+export const generateMetadata = async ({
   params,
 }: {
   params: { slug: string };
-}): Promise<Metadata> {
-  try {
-    const product = await getProduct(params.slug);
-    if (!product) return notFound();
-    return {
-      title: product.seo.title || product.title,
-      description: product.seo.description || product.description,
-    };
-  } catch (error) {
-    console.error('Error generating metadata:', error);
-    return {
-      title: 'Product Not Found',
-      description: 'Unable to load product details',
-    };
-  }
-}
+}): Promise<Metadata> => {
+  const product = await getProduct(params.slug);
+  if (!product) return notFound();
+  return {
+    title: product.seo.title || product.title,
+    description: product.seo.description || product.description,
+  };
+};
 
 const ShowProductSingle = async ({ params }: { params: { slug: string } }) => {
   const paymentsAndDelivery = getListPage("sections/payments-and-delivery.md");
