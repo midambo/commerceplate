@@ -35,10 +35,10 @@ const nextConfig = {
     removeConsole: false,
   },
   experimental: {
-    optimizeCss: true,
+    optimizeCss: false,
     scrollRestoration: true,
     missingSuspenseWithCSRBailout: false,
-    workerThreads: true,
+    workerThreads: false,
     optimizePackageImports: [
       '@headlessui/react',
       'date-fns',

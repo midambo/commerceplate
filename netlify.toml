@@ -1,17 +1,34 @@
 [build]
   command = "yarn build"
   publish = ".next"
+  functions = ".netlify/functions"  # Explicitly set functions directory
 
 [build.environment]
   NEXT_USE_NETLIFY_EDGE = "true"
   NODE_VERSION = "20"
+  NEXT_TELEMETRY_DISABLED = "1"
 
-[context.production.environment]
-  NODE_VERSION = "20"
-  NPM_FLAGS = "--version"
+[functions]
+  # Increase function timeout and size limit
+  node_bundler = "esbuild"
+  external_node_modules = ["@node-rs/*"]
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+# Force HTTPS
+[[redirects]]
+  from = "http://*"
+  to = "https://:splat"
+  status = 301
+  force = true
+
+# Handle root domain
+[[redirects]]
+  from = "/"
+  to = "/.netlify/functions/next"
+  status = 200
+  force = true
 
 # Handle Next.js static files
 [[redirects]]
