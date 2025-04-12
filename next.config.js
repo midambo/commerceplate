@@ -16,14 +16,6 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: '*.cdn.shopify.com'
-      },
-      {
-        protocol: 'http',
-        hostname: 'localhost'
-      },
-      {
-        protocol: 'https',
-        hostname: 'via.placeholder.com'
       }
     ],
     unoptimized: true,
