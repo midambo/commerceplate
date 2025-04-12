@@ -9,11 +9,13 @@
   NEXT_FORCE_EDGE_IMAGES = "true"
   NEXT_PRIVATE_TARGET = "server"
   NEXT_PUBLIC_AVAILABLE_FOR_PREVIEW = "true"
+  NEXT_TELEMETRY_DISABLED = "1"
 
 [context.production.environment]
   NODE_VERSION = "20"
   NPM_FLAGS = "--version"
   NEXT_PRIVATE_TARGET = "server"
+  NEXT_TELEMETRY_DISABLED = "1"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
