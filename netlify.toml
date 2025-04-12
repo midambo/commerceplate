@@ -1,6 +1,6 @@
 [build]
   command = "yarn build"
-  publish = ".next/standalone"
+  publish = ".next/standalone/.next"
   functions = ".netlify/functions-internal"
 
 [build.environment]
