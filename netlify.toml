@@ -1,6 +1,6 @@
 [build]
   command = "yarn build"
-  publish = ".next/standalone"
+  publish = ".next/standalone/.next"
   functions = ".netlify/functions-internal"
 
 [build.environment]
@@ -10,12 +10,16 @@
   NEXT_PRIVATE_TARGET = "server"
   NEXT_PUBLIC_AVAILABLE_FOR_PREVIEW = "true"
   NEXT_TELEMETRY_DISABLED = "1"
+  NEXT_RUNTIME = "edge"
+  NEXT_STANDALONE = "true"
 
 [context.production.environment]
   NODE_VERSION = "20"
   NPM_FLAGS = "--version"
   NEXT_PRIVATE_TARGET = "server"
   NEXT_TELEMETRY_DISABLED = "1"
+  NEXT_RUNTIME = "edge"
+  NEXT_STANDALONE = "true"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
@@ -90,3 +94,4 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    Cache-Control = "public, max-age=0, must-revalidate"
