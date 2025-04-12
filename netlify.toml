@@ -1,6 +1,6 @@
 [build]
   command = "yarn build"
-  publish = ".next/standalone"
+  publish = ".next"
 
 [build.environment]
   NODE_VERSION = "20"
@@ -15,7 +15,7 @@
 # Handle Next.js static files
 [[redirects]]
   from = "/_next/static/*"
-  to = "/.next/static/:splat"
+  to = "/_next/static/:splat"
   status = 200
   force = true
 

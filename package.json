@@ -7,14 +7,12 @@
   "packageManager": "yarn@1.22.19",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "postbuild": "next-sitemap",
+    "build": "next build && next-sitemap",
     "start": "next start",
     "lint": "next lint",
     "format": "prettier -w ./src",
     "generate-json": "node scripts/jsonGenerator.js",
-    "remove-darkmode": "node scripts/removeDarkmode.js && yarn format",
-    "netlify:build": "next build"
+    "remove-darkmode": "node scripts/removeDarkmode.js && yarn format"
   },
   "engines": {
     "node": ">=18.0.0"
