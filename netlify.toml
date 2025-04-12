@@ -25,9 +25,6 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
-  [plugins.inputs]
-    functions = ".netlify/functions-internal"
-    publish = ".next/standalone"
 
 # Handle Next.js static files
 [[redirects]]
