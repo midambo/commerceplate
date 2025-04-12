@@ -1,7 +1,7 @@
 {
   "site": {
     "title": "Toto Toys & Games",
-    "base_url": "toto.co.ke",
+    "base_url": "https://toto.co.ke",
     "base_path": "/",
     "trailing_slash": false,
     "favicon": "/images/favicon.png",
