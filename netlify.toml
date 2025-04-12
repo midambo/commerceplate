@@ -1,6 +1,6 @@
 [build]
   command = "yarn build"
-  publish = ".next"
+  publish = ".next/standalone"
 
 [build.environment]
   NODE_VERSION = "20"
@@ -12,9 +12,44 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
-# Redirect all routes to Next.js handler
+# Handle Next.js static files
+[[redirects]]
+  from = "/_next/static/*"
+  to = "/.next/static/:splat"
+  status = 200
+  force = true
+
+# Handle Next.js public files
+[[redirects]]
+  from = "/public/*"
+  to = "/public/:splat"
+  status = 200
+  force = true
+
+# Handle Next.js image optimization
+[[redirects]]
+  from = "/_next/image*"
+  to = "/.netlify/functions/next"
+  status = 200
+  force = true
+
+# Handle all other routes
 [[redirects]]
   from = "/*"
   to = "/.netlify/functions/next"
+  status = 200
+  force = true
+
+# Handle Shopify CDN images
+[[redirects]]
+  from = "https://cdn.shopify.com/*"
+  to = "https://cdn.shopify.com/:splat"
+  status = 200
+  force = true
+
+# Handle Shopify subdomain CDN images
+[[redirects]]
+  from = "https://*.cdn.shopify.com/*"
+  to = "https://:subdomain.cdn.shopify.com/:splat"
   status = 200
   force = true
