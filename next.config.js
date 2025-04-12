@@ -6,6 +6,7 @@ const nextConfig = {
   basePath: config.base_path !== "/" ? config.base_path : "",
   trailingSlash: config.site.trailing_slash,
   output: "standalone",
+  distDir: '.next',
   images: {
     remotePatterns: [
       {
@@ -31,7 +32,7 @@ const nextConfig = {
   },
   swcMinify: true,
   compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
+    removeConsole: false,
   },
   experimental: {
     optimizeCss: true,
@@ -57,10 +58,6 @@ const nextConfig = {
   generateEtags: true,
   httpAgentOptions: {
     keepAlive: true,
-  },
-  webpack: (config, { dev, isServer }) => {
-    // Existing webpack configuration remains the same
-    return config;
   },
 };
 
