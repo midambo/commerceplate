@@ -23,13 +23,12 @@ const nextConfig = {
   },
   swcMinify: true,
   compiler: {
-    removeConsole: false,
+    removeConsole: process.env.NODE_ENV === 'production',
   },
   experimental: {
-    optimizeCss: false,
+    optimizeCss: true,
     scrollRestoration: true,
-    missingSuspenseWithCSRBailout: false,
-    workerThreads: false,
+    workerThreads: true,
     optimizePackageImports: [
       '@headlessui/react',
       'date-fns',
@@ -49,7 +48,13 @@ const nextConfig = {
   generateEtags: true,
   httpAgentOptions: {
     keepAlive: true,
-  }
+  },
+  // Add output configuration for better edge compatibility
+  output: 'standalone',
+  // Optimize for edge runtime
+  runtime: 'edge',
+  // Enable strict mode for better error catching
+  strictMode: true,
 }
 
 module.exports = nextConfig;
