@@ -6,6 +6,7 @@ const nextConfig = {
   basePath: config.base_path !== "/" ? config.base_path : "",
   trailingSlash: config.site.trailing_slash,
   distDir: '.next',
+  output: 'export', 
   images: {
     remotePatterns: [
       {
@@ -48,13 +49,7 @@ const nextConfig = {
   generateEtags: true,
   httpAgentOptions: {
     keepAlive: true,
-  },
-  // Add output configuration for better edge compatibility
-  output: 'standalone',
-  // Optimize for edge runtime
-  runtime: 'edge',
-  // Enable strict mode for better error catching
-  strictMode: true,
+  }
 }
 
 module.exports = nextConfig;

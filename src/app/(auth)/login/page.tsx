@@ -1,14 +1,16 @@
 "use client";
 
+import ClientOnly from "@/components/ClientOnly";
 import { CustomerError } from "@/lib/shopify/types";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { BiLoaderAlt } from "react-icons/bi";
 import { FormData } from "../sign-up/page";
 
-const Login = () => {
+const LoginForm = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
@@ -57,81 +59,65 @@ const Login = () => {
   };
 
   return (
-    <>
-      <section className="section">
-        <div className="container">
-          <div className="row">
-            <div className="col-11 sm:col-9 md:col-7 mx-auto">
-              <div className="mb-14 text-center">
-                <h2 className="max-md:h1 md:mb-2">Login</h2>
-                <p className="md:text-lg">
-                  Please fill your email and password to login
-                </p>
-              </div>
-
-              <form onSubmit={handleLogin}>
-                <div>
-                  <label className="form-label">Email Address</label>
-                  <input
-                    className="form-input"
-                    placeholder="Type your email"
-                    type="email"
-                    onChange={handleChange}
-                    name="email"
-                  />
-                </div>
-
-                <div>
-                  <label className="form-label mt-8">Password</label>
-                  <input
-                    className="form-input"
-                    placeholder="********"
-                    type="password"
-                    onChange={handleChange}
-                    name="password"
-                  />
-                </div>
-
-                {errorMessages.map((error: CustomerError) => (
-                  <p
-                    key={error.code}
-                    className="font-medium text-red-500 truncate mt-2"
-                  >
-                    *
-                    {error.code === "UNIDENTIFIED_CUSTOMER"
-                      ? `${error.message}`
-                      : "Invalid Email or Password"}
-                  </p>
-                ))}
-
-                <button
-                  type="submit"
-                  className="btn btn-primary md:text-lg md:font-medium w-full mt-10"
-                >
-                  {loading ? (
-                    <BiLoaderAlt className={`animate-spin mx-auto`} size={26} />
-                  ) : (
-                    "Log In"
-                  )}
-                </button>
-              </form>
-
-              <div className="flex gap-x-2 text-sm md:text-base mt-4">
-                <p className="text-light dark:text-darkmode-light">
-                  Don&apos;t have an account?
-                </p>
-                <Link
-                  className="underline font-medium text-dark dark:text-darkmode-dark"
-                  href={"/sign-up"}
-                >
-                  Register
-                </Link>
-              </div>
-            </div>
-          </div>
+    <div className="mx-auto max-w-lg">
+      <h1 className="h3 mb-6 text-center">Login</h1>
+      {errorMessages?.length > 0 && (
+        <div className="mb-4">
+          {errorMessages.map((error: CustomerError, index) => (
+            <p key={index} className="text-red-500">
+              {error.message}
+            </p>
+          ))}
         </div>
-      </section>
-    </>
+      )}
+      <div className="rounded bg-theme-light p-8 text-center dark:bg-darkmode-theme-light">
+        <form onSubmit={handleLogin}>
+          <div className="form-group">
+            <input
+              type="email"
+              name="email"
+              placeholder="Your Email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group mt-4">
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+            />
+          </div>
+          <button
+            type="submit"
+            className="btn btn-primary mt-8 w-full"
+            disabled={loading}
+          >
+            {loading ? (
+              <BiLoaderAlt className="m-auto animate-spin" size={24} />
+            ) : (
+              "Login"
+            )}
+          </button>
+          <p className="mt-6">
+            New Customer?{" "}
+            <Link href="/sign-up" className="text-primary">
+              Create account
+            </Link>
+          </p>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+const Login = () => {
+  return (
+    <ClientOnly>
+      <LoginForm />
+    </ClientOnly>
   );
 };
 
