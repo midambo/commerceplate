@@ -6,7 +6,6 @@ const nextConfig = {
   basePath: config.base_path !== "/" ? config.base_path : "",
   trailingSlash: config.site.trailing_slash,
   distDir: '.next',
-  output: 'export', 
   images: {
     remotePatterns: [
       {

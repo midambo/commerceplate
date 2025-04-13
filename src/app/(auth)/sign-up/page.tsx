@@ -1,25 +1,21 @@
 "use client";
 
-import ClientOnly from "@/components/ClientOnly";
 import { CustomerError } from "@/lib/shopify/types";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { BiLoaderAlt } from "react-icons/bi";
 
 export interface FormData {
   firstName?: string;
-  lastName?: string;
   email: string;
   password: string;
 }
 
-const SignUpForm = () => {
+const SignUp = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
-    lastName: "",
     email: "",
     password: "",
   });
@@ -67,85 +63,101 @@ const SignUpForm = () => {
   };
 
   return (
-    <div className="mx-auto max-w-lg">
-      <h1 className="h3 mb-6 text-center">Create Account</h1>
-      {errorMessages?.length > 0 && (
-        <div className="mb-4">
-          {errorMessages.map((error: CustomerError, index) => (
-            <p key={index} className="text-red-500">
-              {error.message}
-            </p>
-          ))}
-        </div>
-      )}
-      <div className="rounded bg-theme-light p-8 text-center dark:bg-darkmode-theme-light">
-        <form onSubmit={handleSignUp}>
-          <div className="form-group">
-            <input
-              type="text"
-              name="firstName"
-              placeholder="First Name"
-              value={formData.firstName}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group mt-4">
-            <input
-              type="text"
-              name="lastName"
-              placeholder="Last Name"
-              value={formData.lastName}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group mt-4">
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group mt-4">
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-            />
-          </div>
-          <button
-            type="submit"
-            className="btn btn-primary mt-8 w-full"
-            disabled={loading}
-          >
-            {loading ? (
-              <BiLoaderAlt className="m-auto animate-spin" size={24} />
-            ) : (
-              "Sign Up"
-            )}
-          </button>
-          <p className="mt-6">
-            Already have an account?{" "}
-            <Link href="/login" className="text-primary">
-              Login
-            </Link>
-          </p>
-        </form>
-      </div>
-    </div>
-  );
-};
+    <>
+      <section className="section">
+        <div className="container">
+          <div className="row">
+            <div className="col-11 sm:col-9 md:col-7 mx-auto">
+              <div className="mb-14 text-center">
+                <h2 className="max-md:h1 md:mb-2">Create an account</h2>
+                <p className="md:text-lg">
+                  Create an account and start using...
+                </p>
+              </div>
 
-const SignUp = () => {
-  return (
-    <ClientOnly>
-      <Suspense fallback={<div>Loading...</div>}>
-        <SignUpForm />
-      </Suspense>
-    </ClientOnly>
+              <form onSubmit={handleSignUp}>
+                <div>
+                  <label className="form-label">Name</label>
+                  <input
+                    name="firstName"
+                    className="form-input"
+                    placeholder="Enter your name"
+                    type="text"
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div>
+                  <label className="form-label mt-8">Email Address</label>
+                  <input
+                    name="email"
+                    className="form-input"
+                    placeholder="Type your email"
+                    type="email"
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div>
+                  <label className="form-label mt-8">Password</label>
+                  <input
+                    name="password"
+                    className="form-input"
+                    placeholder="********"
+                    type="password"
+                    onChange={handleChange}
+                  />
+                </div>
+
+                {errorMessages.map((error: CustomerError) => (
+                  <p
+                    key={error.code}
+                    className="ont-medium text-red-500 truncate mt-2"
+                  >
+                    *{error.message}
+                  </p>
+                ))}
+
+                <button
+                  type="submit"
+                  className="btn btn-primary md:text-lg md:font-medium w-full mt-10"
+                >
+                  {loading ? (
+                    <BiLoaderAlt className={`animate-spin mx-auto`} size={26} />
+                  ) : (
+                    "Sign Up"
+                  )}
+                </button>
+              </form>
+
+              <div className="flex gap-x-2 text-sm md:text-base mt-6">
+                <p className="text-light dark:text-darkmode-light">
+                  I have read and agree to the
+                </p>
+                <Link
+                  className="underline font-medium text-dark dark:text-darkmode-dark"
+                  href={"/terms-services"}
+                >
+                  Terms & Conditions
+                </Link>
+              </div>
+
+              <div className="flex gap-x-2 text-sm md:text-base mt-2">
+                <p className="text-light dark:text-darkmode-light">
+                  Have an account?
+                </p>
+                <Link
+                  className="underline font-medium text-dark dark:text-darkmode-dark"
+                  href={"/login"}
+                >
+                  Login
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
   );
 };
 
