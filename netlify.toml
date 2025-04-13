@@ -17,54 +17,29 @@
   status = 301
   force = true
 
-# Handle root domain
+# Handle Next.js routes
 [[redirects]]
-  from = "/"
+  from = "/*"
   to = "/.netlify/functions/next"
   status = 200
-  force = true
 
 # Handle Next.js static files
 [[redirects]]
   from = "/_next/static/*"
   to = "/_next/static/:splat"
   status = 200
-  force = true
 
 # Handle Next.js public files
 [[redirects]]
   from = "/public/*"
   to = "/public/:splat"
   status = 200
-  force = true
 
 # Handle Next.js image optimization
 [[redirects]]
   from = "/_next/image*"
   to = "/.netlify/functions/next"
   status = 200
-  force = true
-
-# Handle all other routes
-[[redirects]]
-  from = "/*"
-  to = "/.netlify/functions/next"
-  status = 200
-  force = true
-
-# Handle Shopify CDN images
-[[redirects]]
-  from = "https://cdn.shopify.com/*"
-  to = "https://cdn.shopify.com/:splat"
-  status = 200
-  force = true
-
-# Handle Shopify subdomain CDN images
-[[redirects]]
-  from = "https://*.cdn.shopify.com/*"
-  to = "https://:subdomain.cdn.shopify.com/:splat"
-  status = 200
-  force = true
 
 [[headers]]
   for = "/*"

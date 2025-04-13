@@ -49,7 +49,7 @@ const nextConfig = {
   generateEtags: true,
   httpAgentOptions: {
     keepAlive: true,
-  },
-};
+  }
+}
 
 module.exports = nextConfig;
