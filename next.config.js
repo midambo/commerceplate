@@ -5,7 +5,6 @@ const nextConfig = {
   reactStrictMode: true,
   basePath: config.base_path !== "/" ? config.base_path : "",
   trailingSlash: config.site.trailing_slash,
-  output: "standalone",
   distDir: '.next',
   images: {
     remotePatterns: [
