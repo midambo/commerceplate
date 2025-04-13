@@ -5,6 +5,7 @@ const nextConfig = {
   reactStrictMode: true,
   basePath: config.base_path !== "/" ? config.base_path : "",
   trailingSlash: config.site.trailing_slash,
+  output: "standalone",
   distDir: '.next',
   images: {
     remotePatterns: [
@@ -23,12 +24,13 @@ const nextConfig = {
   },
   swcMinify: true,
   compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
+    removeConsole: false,
   },
   experimental: {
-    optimizeCss: true,
+    optimizeCss: false,
     scrollRestoration: true,
-    workerThreads: true,
+    missingSuspenseWithCSRBailout: false,
+    workerThreads: false,
     optimizePackageImports: [
       '@headlessui/react',
       'date-fns',
@@ -48,7 +50,7 @@ const nextConfig = {
   generateEtags: true,
   httpAgentOptions: {
     keepAlive: true,
-  }
-}
+  },
+};
 
 module.exports = nextConfig;

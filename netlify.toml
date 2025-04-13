@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build"
+  command = "next build"
   publish = ".next"
 
 [[plugins]]
@@ -8,7 +8,6 @@
 [build.environment]
   NEXT_USE_NETLIFY_EDGE = "true"
   NODE_VERSION = "20"
-  NEXT_TELEMETRY_DISABLED = "1"
 
 # Force HTTPS
 [[redirects]]
@@ -17,29 +16,54 @@
   status = 301
   force = true
 
-# Handle Next.js routes
+# Handle root domain
 [[redirects]]
-  from = "/*"
+  from = "/"
   to = "/.netlify/functions/next"
   status = 200
+  force = true
 
 # Handle Next.js static files
 [[redirects]]
   from = "/_next/static/*"
   to = "/_next/static/:splat"
   status = 200
+  force = true
 
 # Handle Next.js public files
 [[redirects]]
   from = "/public/*"
   to = "/public/:splat"
   status = 200
+  force = true
 
 # Handle Next.js image optimization
 [[redirects]]
   from = "/_next/image*"
   to = "/.netlify/functions/next"
   status = 200
+  force = true
+
+# Handle all other routes
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/next"
+  status = 200
+  force = true
+
+# Handle Shopify CDN images
+[[redirects]]
+  from = "https://cdn.shopify.com/*"
+  to = "https://cdn.shopify.com/:splat"
+  status = 200
+  force = true
+
+# Handle Shopify subdomain CDN images
+[[redirects]]
+  from = "https://*.cdn.shopify.com/*"
+  to = "https://:subdomain.cdn.shopify.com/:splat"
+  status = 200
+  force = true
 
 [[headers]]
   for = "/*"
